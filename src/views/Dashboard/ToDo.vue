@@ -15,7 +15,7 @@
             <div class="mt-3">
               <form v-on:submit.prevent="submitAddList">
                 <div class="form-group">
-                  <label for="title">Title:</label>
+                  <label for="title">Nama:</label>
                   <input
                     type="text"
                     class="form-control"
@@ -24,7 +24,7 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label for="category">Category:</label>
+                  <label for="category">Role:</label>
                   <input
                     type="text"
                     class="form-control"
@@ -33,7 +33,7 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label for="description">Description:</label>
+                  <label for="description">JobDesk:</label>
                   <textarea
                     type="text"
                     class="form-control"

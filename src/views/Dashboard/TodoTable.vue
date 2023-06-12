@@ -8,23 +8,23 @@
         <table class="table align-items-center mb-0">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Title</th>
-              <th>Created At</th>
-              <th>Completed</th>
-              <th>Description</th>
+              <th>No</th>
+              <th>Nama</th>
+              <th>Jobdesk</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(item, index) in g$list" :key="item.id">
               <td class="ps-4">{{ index + 1 }}</td>
-              <td>{{ item.title }}</td>
-              <td>{{ item.createdAt }}</td>
-              <td class="text-primary ps-5">
-                {{ item.completed == true ? "Done" : "Not Yet" }}
+              <td>
+                <h6>{{ item.title }}</h6>
               </td>
               <td>{{ item.description }}</td>
+              <td class="text-primary ps-4">
+                {{ item.completed == true ? "Done" : "Not Yet" }}
+              </td>
               <td>
                 <button
                   class="btn-secondary rounded px-3"
@@ -50,7 +50,7 @@
           <div class="mt-3">
             <form v-on:submit.prevent="updateList($event)">
               <div class="form-group">
-                <label for="title">Title:</label>
+                <label for="title">Nama:</label>
                 <input
                   type="text"
                   class="form-control"
@@ -59,7 +59,7 @@
                 />
               </div>
               <div class="form-group">
-                <label for="completed">Completed:</label>
+                <label for="completed">Status</label>
                 <argon-switch
                   @change="toggleSwitch"
                   :checked="editedItem.completed"
@@ -68,7 +68,7 @@
                 </argon-switch>
               </div>
               <div class="form-group">
-                <label for="description">Description:</label>
+                <label for="description">JobDesk:</label>
                 <textarea
                   type="text"
                   class="form-control"
