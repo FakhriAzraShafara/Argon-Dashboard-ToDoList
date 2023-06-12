@@ -23,7 +23,7 @@
               </td>
               <td>{{ item.description }}</td>
               <td class="text-primary ps-4">
-                {{ item.completed == true ? "Done" : "Not Yet" }}
+                {{ item.completed ? "Done" : "Not Yet" }}
               </td>
               <td>
                 <button
@@ -35,7 +35,7 @@
 
                 <button
                   class="btn-danger rounded px-3 ms-2"
-                  @click="deleteItem(item.id)"
+                  @click="showConfirmation(item.id, item.title)"
                 >
                   Delete
                 </button>
@@ -44,11 +44,40 @@
           </tbody>
         </table>
       </div>
+
+      <Modal v-show="confirmationVisible" @close="closeModal2">
+        <template v-slot:header>This Modal Confirmation</template>
+        <template v-slot:body>
+          <div class="mt-3">
+            <div class="text-center fs-1">
+              Are you sure to delete {{ deleteItemTitle }}?
+            </div>
+            <div class="text-center mt-9">
+              <button
+                class="btn btn-danger px-6 fs-5"
+                @click="deleteItem"
+                type="submit"
+              >
+                Delete
+              </button>
+              <button
+                class="btn btn-secondary px-6 fs-5 ms-2"
+                @click="closeModal2"
+                type="submit"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </template>
+        <template v-slot:footer>@footerKonfirmasi</template>
+      </Modal>
+
       <Modal v-show="isModalEditVisible" @close="closeModal">
         <template v-slot:header>This Modal</template>
         <template v-slot:body>
           <div class="mt-3">
-            <form v-on:submit.prevent="updateList($event)">
+            <form v-on:submit.prevent="updateList">
               <div class="form-group">
                 <label for="title">Nama:</label>
                 <input
@@ -62,7 +91,7 @@
                 <label for="completed">Status</label>
                 <argon-switch
                   @change="toggleSwitch"
-                  :checked="editedItem.completed"
+                  v-model="editedItem.completed"
                 >
                   {{ editedItem.completed ? "Done" : "Not Yet" }}
                 </argon-switch>
@@ -111,6 +140,9 @@ export default {
         completed: false,
       },
       isModalEditVisible: false,
+      confirmationVisible: false,
+      deleteItemId: null,
+      deleteItemTitle: "",
     };
   },
   computed: {
@@ -121,12 +153,18 @@ export default {
       this.editedItem = { ...item };
       this.isModalEditVisible = true;
     },
+    showConfirmation(itemId, title) {
+      this.confirmationVisible = true;
+      this.deleteItemId = itemId;
+      this.deleteItemTitle = title;
+    },
     closeModal() {
       this.isModalEditVisible = false;
     },
-    async updateList(event) {
-      event.preventDefault();
-
+    closeModal2() {
+      this.confirmationVisible = false;
+    },
+    async updateList() {
       try {
         const updatedItem = { ...this.editedItem };
         delete updatedItem.id;
@@ -155,15 +193,19 @@ export default {
       }
     },
 
-    async deleteItem(itemId) {
+    async deleteItem() {
       try {
-        await this.a$delete(itemId);
+        await this.a$delete(this.deleteItemId);
 
         // Hapus item dari daftar tugas secara lokal
-        this.g$list = this.g$list.filter((item) => item.id !== itemId);
+        this.g$list = this.g$list.filter(
+          (item) => item.id !== this.deleteItemId
+        );
 
         // Perbarui data tabel secara otomatis setelah operasi penghapusan berhasil
         await this.getList();
+
+        this.closeModal2();
       } catch (e) {
         console.error(e);
       }
