@@ -133,10 +133,11 @@ export default {
         this.$router.replace({ name: "Default" });
       } catch (e) {
         console.error(e);
-        alert(message, e);
+        window.alert("Login Failed. Please Try again\n" + e);
       }
     },
   },
+
   created() {
     this.$store.state.hideConfigButton = true;
     this.$store.state.showNavbar = false;
