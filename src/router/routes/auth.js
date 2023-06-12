@@ -1,23 +1,29 @@
 const auth = {
     path: '/',
     name: 'Auth',
-    component: () => {
-        if (auth === true) {
-            return import('@/views/Dashboard/Default.vue');
-        } else {
-            return import('@/views/Auth/Signin.vue');
-        }
-    },
+    redirect: { name: 'Signin' },
     children: [
         {
             path: "/auth/signin",
             name: "Signin",
-            component: () => import('@/views/Auth/Signin.vue'),
+            component: () => {
+                if (auth === true) {
+                    return import('@/views/Dashboard/Default.vue');
+                } else {
+                    return import('@/views/Auth/Signin.vue');
+                }
+            },
         },
         {
             path: "/auth/signup",
             name: "Signup",
-            component: () => import('@/views/Auth/Signup.vue'),
+            component: () => {
+                if (auth === true) {
+                    return import('@/views/Dashboard/Default.vue');
+                } else {
+                    return import('@/views/Auth/Signup.vue');
+                }
+            },
         },
     ],
 };

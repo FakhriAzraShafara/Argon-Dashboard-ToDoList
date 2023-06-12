@@ -182,8 +182,10 @@
                 </div>
                 <p class="text-sm mt-3 mb-0">
                   Already have an account?
-                  <a href="javascript:;" class="text-dark font-weight-bolder"
-                    >Sign in</a
+                  <router-link
+                    class="text-dark font-weight-bolder"
+                    :to="{ name: 'Signin' }"
+                    >Sign in</router-link
                   >
                 </p>
               </form>
