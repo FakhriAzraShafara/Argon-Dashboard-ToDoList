@@ -61,7 +61,7 @@
 import { mapActions } from "pinia";
 import d$todo from "@/stores/dashboard/todo";
 import Modal from "@/components/Modal.vue";
-import TodoTable from "@/views/Dashboard/ToDoTable.vue";
+import TodoTable from "@/views/Dashboard/TodoTable.vue";
 
 export default {
   name: "Todo",

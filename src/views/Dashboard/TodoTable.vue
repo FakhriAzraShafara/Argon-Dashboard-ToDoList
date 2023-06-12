@@ -45,7 +45,7 @@
         </table>
       </div>
       <Modal v-show="isModalEditVisible" @close="closeModal">
-        <template v-slot:header>Spongebob</template>
+        <template v-slot:header>This Modal</template>
         <template v-slot:body>
           <div class="mt-3">
             <form v-on:submit.prevent="updateList($event)">
